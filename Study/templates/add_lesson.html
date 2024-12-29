@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block main %}
+<form method="post" enctype="multipart/form-data" class="form-container">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if photo %}
+    <a href="{{ photo.url }}">Hozirgi Rasm
+    </a>
+    {% endif %}
+    <div class="d-flex justify-content-around">
+        {% if lesson_id %}
+            <input type="submit" value="O'zgartirish" class="btn btn-outline-primary btn-rounded">
+        {% else %}
+            <input type="submit" value="Yangi Dars Qo'shish" class="btn btn-outline-primary btn-rounded">
+        {% endif %}
+        <a href="{% url 'home' %}" class="btn btn-outline-primary btn-rounded">Orqaga</a>
+    </div>
+</form>
+{% endblock main %}

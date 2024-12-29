@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prestige flowers</title>
+    {% load static %}
+    <link href="{% static 'media/icon.png' %}" rel="icon">
+    {% include "parts/styles.html" %}
+</head>
+<body>
+{% include "parts/_navbar.html" %}
+{% if messages %}
+{% if form.errors %}
+{% for field in forms %}
+{% for error in field.errors %}
+<div class="alert alert-danger" role="alert">{{ error }}
+</div>
+{% endfor %}
+{% endfor %}
+{% endif %}
+<ul class="messages d-flex justify-content-center">
+    {% for message in messages %}
+    <li class="alert alert-{% if message.tags == 'error' %}danger {% else %}{{ message.tags }} {% endif %}"
+        id="unordered_list">{{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% block main %}
+{% endblock main %}
+
+{% include "parts/_footer.html" %}
+
+{% include "parts/_js.html" %}
+
+</body>
+</html>

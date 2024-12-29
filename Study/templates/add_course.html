@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<form method="post" enctype="multipart/form-data" class="form-container">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="d-flex justify-content-between mt-3">
+        <input type="submit" value="Save" class="btn btn-outline-primary btn-rounded">
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-rounded">Cancel</a>
+    </div>
+</form>
+{% endblock main %}

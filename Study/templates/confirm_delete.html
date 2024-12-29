@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block main %}
+<form method="post">
+    {% csrf_token %}
+    <h1 class="d-flex justify-content-center">Siz rostanham darsni ochirib yubormoqchimisiz?</h1>
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    <div class="d-flex justify-content-center"><h2>Dars nomi: {{ lesson.name }}</h2></div>
+    <div class="d-flex justify-content-around">
+        <a href="{% url 'lesson' lesson.id %}" class="btn btn-outline-primary btn-rounded" data-mdb-ripple-init  data-mdb-ripple-color="dark">Yo'q</a>
+        <button type="submit" class="btn btn-outline-danger btn-rounded" data-mdb-ripple-init  data-mdb-ripple-color="dark">Ha</button>
+    </div>
+</form>
+{% endblock main %}

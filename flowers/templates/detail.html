@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Gul turi: {{ flower.type.name }}</h2>
+
+    <div class="card shadow-sm border-light">
+        <div class='d-flex flex-row-reverse'>
+            <a href="{% url 'delete_flowers' flower.id%}"><i class="fas fa-trash-can"></i></a>
+            &nbsp;
+            &nbsp;
+            <a href="{% url 'update_flowers' flower.id%}"><i class="fas fa-pen-to-square"></i></a>
+
+        </div>
+
+        <div class="card-body">
+            <h5 class="card-title">Gul haqida ma'lumotlar!</h5>
+            <br>
+            <p class="card-text"><strong>Nomi:</strong> {{ flower.name }}</p>
+            <p class="card-text"><strong>Narxi:</strong> {{ flower.price }} UZS</p>
+            <p class="card-text"><strong>Soni:</strong> {{ flower.quantity }} ta</p>
+            <p class="card-text"><strong>Tavsifi:</strong> {{ flower.description }}</p>
+            <p class="card-text"><strong>Saytda korinishi:</strong> {% if flower.published %} Korinadi✅ {% else %}
+                korinmaydi❌ {% endif %}</p>
+        </div>
+    </div>
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-4">Orqaga qaytish</a>
+</div>
+{% if request.user.is_authenticated %}
+<form method="post" action="{% url 'comment_save' flower.pk%}" class="mb-5">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+{% else %}
+<h2>Komment qoldirish uchun <a href="{% url 'login' %}">login</a> qiling</h2>
+{% endif %}
+{% for comment in comments %}
+<div class="card border border-dark mb-3" style="max-width: 100rem;">
+  <div class="card-header">
+      {{ comment.author.username }}
+      {% if request.user == comment.author or request.user.is_superuser %}
+      <a href="{% url 'comment_delete' comment.id%}"><i class="fas fa-trash-can"></i></a>
+      <a href="{% url 'comment_update' comment.id%}"><i class="fas fa-pen-to-square"></i></a>
+      {% endif %}
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{ comment.text }}</p>
+  </div>
+    <div class="card-footer bg-transparent border-success">{{ comment.created }}</div>
+</div>
+{% endfor %}
+{% endblock main %}
